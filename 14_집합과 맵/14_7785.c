@@ -9,7 +9,7 @@ int compare(const char* a, const char* b)
 int main(void)
 {
 	int n, i;
-	char name[1000][6];
+	char name[1000000][6];
 	char check[6];
 	
 	scanf("%d", &n);
