@@ -1,43 +1,45 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 
-int Z(int size, int row, int col, int r, int c, int* num)
+void Z(int size, int row, int col, int r, int c, int num)
 {
 	if(row==r && col==c)
 	{
-		printf("%d", *num);
-		return 1;
+		printf("%d", num);
 	}
 	else
 	{
-		if(size==1)
+		size /= 2;
+		
+		if(r<row+size && c<col+size)  // 1사분면 
 		{
-			(*num)++;
+			Z(size, row, col, r, c, num);
 		}
-		else
+		else if(r<row+size && c>=col+size)  // 2사분면 
 		{
-			size /= 2;
-			if(r<size && c<size)
-			{
-				Z(size, row, col, r, c, )
-			}
-			
-			if(Z(size, row, col, r, c, num)==1) return 1;
-			if(Z(size, row, col+size, r, c, num)==1) return 1;
-			if(Z(size, row+size, col, r, c, num)==1) return 1;
-			if(Z(size, row+size, col+size, r, c, num)==1) return 1;
+			num += size*size;
+			Z(size, row, col+size, r, c, num);
+		}
+		else if(r>=row+size && c<col+size)  // 3사분면 
+		{
+			num += size*size*2;
+			Z(size, row+size, col, r, c, num);
+		}
+		else  // 4사분면 
+		{
+			num += size*size*3;
+			Z(size, row+size, col+size, r, c, num);
 		}
 	}
-	return 0;
 }
 
 int main()
 {
-	int N, r, c, num=0;
+	int N, r, c, num = 0;
 	
 	scanf("%d %d %d", &N, &r, &c);
-	Z(pow(2, N), 0, 0, r, c, &num);
+	
+	Z(pow(2, N), 0, 0, r, c, num);
 	
 	return 0;
 }
